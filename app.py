@@ -3,8 +3,9 @@ import pandas as pd
 import joblib
 
 # Load saved model and encoder
-model = joblib.load("xgb_pipeline.pkl")
-label_encoder = joblib.load("label_encoder.pkl")
+model = joblib.load("model/xgb_pipeline.pkl")
+label_encoder = joblib.load("model/label_encoder.pkl")
+
 
 # Streamlit app title
 st.title("📱 Mobile Price Category Predictor")
