@@ -1,17 +1,18 @@
 import streamlit as st
 import pandas as pd
+from xgboost import XGBClassifier
 import joblib
 
-# Extra imports needed for joblib to resolve objects inside the pipeline
-import xgboost
-import sklearn
+# Load preprocessing pipeline (without classifier)
+preprocessor = joblib.load("model/preprocessor.pkl")
 
-# Load the model
-model = joblib.load("model/xgb_pipeline.pkl")
+# Load XGBoost model
+clf = XGBClassifier()
+clf.load_model("model/xgb_model.json")
 
 st.title("📱 Mobile Price Category Predictor")
 
-# Input form
+# Inputs
 battery_power = st.slider("Battery Power", 500, 2000, 1000)
 ram = st.slider("RAM (MB)", 256, 4000, 1500)
 px_height = st.slider("Pixel Height", 0, 1960, 600)
@@ -23,7 +24,6 @@ four_g = st.selectbox("4G Support", [0, 1])
 touch_screen = st.selectbox("Touch Screen", [0, 1])
 
 if st.button("Predict"):
-    # Build a sample dataframe with all features the model expects
     sample = pd.DataFrame([{
         'battery_power': battery_power,
         'blue': 1,
@@ -47,8 +47,10 @@ if st.button("Predict"):
         'wifi': 1
     }])
 
-    # Predict
-    prediction = model.predict(sample)
-    label_map = {0: "Low", 1: "Mid", 2: "High", 3: "Premium"}
+    # Preprocess (if you had a preprocessor)
+    X = preprocessor.transform(sample)
 
+    # Predict
+    prediction = clf.predict(X)
+    label_map = {0: "Low", 1: "Mid", 2: "High", 3: "Premium"}
     st.success(f"Predicted Price Category: {label_map[prediction[0]]}")
