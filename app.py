@@ -1,7 +1,10 @@
-
 import streamlit as st
 import pandas as pd
 import joblib
+
+# Extra imports needed for joblib to resolve objects inside the pipeline
+import xgboost
+import sklearn
 
 # Load the model
 model = joblib.load("model/xgb_pipeline.pkl")
@@ -20,6 +23,7 @@ four_g = st.selectbox("4G Support", [0, 1])
 touch_screen = st.selectbox("Touch Screen", [0, 1])
 
 if st.button("Predict"):
+    # Build a sample dataframe with all features the model expects
     sample = pd.DataFrame([{
         'battery_power': battery_power,
         'blue': 1,
@@ -42,6 +46,9 @@ if st.button("Predict"):
         'touch_screen': touch_screen,
         'wifi': 1
     }])
+
+    # Predict
     prediction = model.predict(sample)
     label_map = {0: "Low", 1: "Mid", 2: "High", 3: "Premium"}
+
     st.success(f"Predicted Price Category: {label_map[prediction[0]]}")
