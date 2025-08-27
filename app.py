@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 import xgboost as xgb
 
 # Load pipeline (preprocessing + model)
-model = joblib.load("model/xgb_pipeline.pkl")
+model = joblib.load("model/xgb_pipeline (2).pkl")
 
 # App title
 st.title("📱 Mobile Price Classification App")
