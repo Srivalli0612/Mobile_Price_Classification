@@ -1,10 +1,11 @@
 import streamlit as st
 import joblib
-import numpy as np
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.pipeline import Pipeline
-import xgboost as xgb
+from xgboost import XGBClassifier
+
 
 # Load pipeline (preprocessing + model)
 model = joblib.load("model/xgb_pipeline (2).pkl")
