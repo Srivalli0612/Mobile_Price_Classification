@@ -3,8 +3,8 @@ import pandas as pd
 import joblib
 
 # Load saved model and encoder
-model = joblib.load("model/xgb_pipeline.pkl")
-label_encoder = joblib.load("model/label_encoder.pkl")
+model = joblib.load("model/xgb_pipeline (2).pkl")
+label_encoder = joblib.load("model/label_encoder (1).pkl")
 
 
 # Streamlit app title
